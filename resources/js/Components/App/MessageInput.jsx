@@ -56,6 +56,7 @@ const MessageInput = ({ conversation = null }) => {
             formData.append("attachments[]", file.file);
         });
         formData.append("message", newMessage);
+        formData.append("is_read", 0);
         if (conversation.is_user) {
             formData.append("receiver_id", conversation.id);
         } else if (conversation.is_group) {
@@ -110,6 +111,7 @@ const MessageInput = ({ conversation = null }) => {
     const recordedAudioReady = (file, url) => {
         setChosenFiles((prevFiles) => [...prevFiles, { file, url }]);
     };
+
 
     return (
         <div className="flex flex-wrap items-start border-t border-slate-700 py-3">

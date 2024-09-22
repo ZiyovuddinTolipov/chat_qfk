@@ -163,7 +163,7 @@ function Home({ selectedConversation = null, messages = null }) {
     useEffect(() => {
         if (selectedConversation) {
             const receiverId = selectedConversation.id; // O'sha odamning ID'si
-    
+
             axios.post(`/api/messages/mark-as-read/${receiverId}`, { userId })
                 .then(response => {
                     if (response.data.success) {

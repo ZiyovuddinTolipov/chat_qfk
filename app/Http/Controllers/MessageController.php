@@ -159,13 +159,14 @@ class MessageController extends Controller
     public function markMessagesAsRead(Request $request, $receiverId)
     {
         $userId = $request->input('userId'); // localStorage dan olingan userId
-    
+
         // O'qilmagan xabarlarni yangilash
         Message::where('sender_id', $receiverId) // O'sha odamdan kelgan xabarlar
             ->where('receiver_id', $userId) // Hozirgi foydalanuvchi qabul qiluvchi
             ->where('is_read', false)
             ->update(['is_read' => true]);
-    
+
         return response()->json(['success' => true]);
     }
+
 }

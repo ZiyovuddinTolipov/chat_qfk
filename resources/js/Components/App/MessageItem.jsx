@@ -1,6 +1,6 @@
 import { usePage } from "@inertiajs/react";
 import ReactMarkdown from "react-markdown";
-import React from "react";
+import React,{useEffect} from "react";
 import UserAvatar from "./UserAvatar";
 import { formatMessageDateLong } from "@/helpers";
 import MessageAttachments from "./MessageAttachments";
@@ -8,7 +8,7 @@ import MessageOptionsDropdown from "./MessageOptionsDropdown";
 
 const MessageItem = ({ message, attachmentClick }) => {
     const currentUser = usePage().props.auth.user;
-
+    console.log(message)
     return (
         <div
             className={
@@ -52,7 +52,7 @@ const MessageItem = ({ message, attachmentClick }) => {
                     />
                     {/* O'qilgan yoki o'qilmagan xabarlar holatini ko'rsatish faqat siz yuborgan xabarlarda */}
                     {message.sender_id === currentUser.id && (
-                        <div className="text-xs opacity-50 mt-1">
+                        <div className="text-xs opacity-100 text-white mt-1">
                             {message.is_read ? "O'qilgan" : "O'qilmagan"}
                         </div>
                     )}

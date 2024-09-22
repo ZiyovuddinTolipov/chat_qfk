@@ -1,11 +1,10 @@
+import { useState,useEffect } from "react";
 import ConversationItem from "@/Components/App/ConversationItem";
 import GroupModal from "@/Components/App/GroupModal";
 import TextInput from "@/Components/TextInput";
 import { useEventBus } from "@/EventBus";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { router, usePage } from "@inertiajs/react";
-import { useState } from "react";
-import { useEffect } from "react";
 
 const ChatLayout = ({ children }) => {
     const page = usePage();

@@ -37,6 +37,7 @@ class MessageFactory extends Factory
 
         return [
             'sender_id' => $senderId,
+            'is_read' => $this->faker->boolean(), // Tasodifiy true yoki false
             'receiver_id' => $receiverId,
             'group_id' => $groupId,
             'message' => $this->faker->realText(200),
