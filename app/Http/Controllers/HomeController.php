@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function home()
-    {
-        return inertia('Home');
-    }
+{
+    return inertia('Home', [
+        'userId' => auth()->id(), // Foydalanuvchi ID'sini uzatish
+    ]);
+}
 }

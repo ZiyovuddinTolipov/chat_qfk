@@ -9,6 +9,7 @@ import { useEffect } from "react";
 
 const ChatLayout = ({ children }) => {
     const page = usePage();
+    const currentUser = usePage().props.auth.user;
     const conversations = page.props.conversations;
     const selectedConversation = page.props.selectedConversation;
     const [localConversations, setLocalConversations] = useState([]);
@@ -173,12 +174,15 @@ const ChatLayout = ({ children }) => {
                             className="tooltip tooltip-left"
                             data-tip="Create new Group"
                         >
+                            {currentUser.is_admin && 
+                            
                             <button
                                 onClick={(ev) => setShowGroupModal(true)}
                                 className="text-gray-400 hover:text-gray-200"
                             >
                                 <PencilSquareIcon className="w-4 h-4 inline-block ml-2" />
                             </button>
+                            }
                         </div>
                     </div>
                     <div className="p-3">

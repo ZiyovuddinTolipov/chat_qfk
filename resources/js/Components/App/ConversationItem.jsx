@@ -4,11 +4,8 @@ import GroupAvatar from "./GroupAvatar";
 import UserOptionsDropdown from "./UserOptionsDropdown";
 import { formatMessageDateShort } from "@/helpers";
 
-const ConversationItem = ({
-    conversation,
-    selectedConversation = null,
-    online = null,
-}) => {
+const ConversationItem = ({conversation,selectedConversation = null,online = null,}) => {
+    const unreadCount = conversation.unread_count || 0; // O'qilmagan xabarlar soni
     const page = usePage();
     const currentUser = page.props.auth.user;
     let classes = " border-transparent";
@@ -73,6 +70,13 @@ const ConversationItem = ({
                         {conversation.last_message}
                     </p>
                 )}
+                <div className="flex items-center">
+                    <span>{conversation.name}</span>
+                    {unreadCount > 0 && (
+                        <span className="ml-2 badge">{unreadCount}</span> // O'qilmagan xabarlar soni
+                    )}
+                    {online && <span className="online-indicator">●</span>} {/* Onlayn holati */}
+                </div>
             </div>
             {!!currentUser.is_admin && conversation.is_user && (
                 <UserOptionsDropdown conversation={conversation} />

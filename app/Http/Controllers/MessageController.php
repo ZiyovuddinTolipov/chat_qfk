@@ -74,15 +74,14 @@ class MessageController extends Controller
     {
         $data = $request->validated();
         $data['sender_id'] = auth()->id();
-        $receiverId = $data['receiver_id'] ?? null;
-        $groupId = $data['group_id'] ?? null;
-
-        $files = $data['attachments'] ?? [];
+        
+        // conversation_id ni qo'shish
+        $data['conversation_id'] = $request->conversation_id; // Bu yerda conversation_id ni olish
 
         $message = Message::create($data);
 
         $attachments = [];
-        if ($files) {
+        if ($files = $data['attachments'] ?? []) {
             foreach ($files as $file) {
                 $directory = 'attachments/' . Str::random(32);
                 Storage::makeDirectory($directory);
@@ -100,12 +99,11 @@ class MessageController extends Controller
             $message->attachments = $attachments;
         }
 
-
-        if ($receiverId) {
+        if ($receiverId = $data['receiver_id'] ?? null) {
             Conversation::updateConversationWithMessage($receiverId, auth()->id(), $message);
         }
 
-        if ($groupId) {
+        if ($groupId = $data['group_id'] ?? null) {
             Group::updateGroupWithMessage($groupId, $message);
         }
 
@@ -146,5 +144,28 @@ class MessageController extends Controller
         }
 
         return response()->json(['message' => $lastMessage ? new MessageResource($lastMessage) : null]);
+    }
+
+    public function getUnreadCount()
+    {
+        $userId = auth()->id(); // Hozirgi foydalanuvchi ID sini olish
+        $unreadCount = Message::where('receiver_id', $userId)
+                            ->where('is_read', false)
+                              ->count(); // O'qilmagan xabarlarni hisoblash
+
+        return response()->json(['unread_count' => $unreadCount]);
+    }
+
+    public function markMessagesAsRead(Request $request, $receiverId)
+    {
+        $userId = $request->input('userId'); // localStorage dan olingan userId
+    
+        // O'qilmagan xabarlarni yangilash
+        Message::where('sender_id', $receiverId) // O'sha odamdan kelgan xabarlar
+            ->where('receiver_id', $userId) // Hozirgi foydalanuvchi qabul qiluvchi
+            ->where('is_read', false)
+            ->update(['is_read' => true]);
+    
+        return response()->json(['success' => true]);
     }
 }

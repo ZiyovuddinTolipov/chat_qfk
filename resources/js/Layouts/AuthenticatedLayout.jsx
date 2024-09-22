@@ -58,7 +58,7 @@ export default function Authenticated({ header, children }) {
                                 message.attachments.length === 1
                                     ? "an attachment"
                                     : message.attachments.length +
-                                      " attachments"
+                                    " attachments"
                             }`,
                     });
                 });
@@ -82,6 +82,7 @@ export default function Authenticated({ header, children }) {
                     channel = `message.user.${[
                         parseInt(user.id),
                         parseInt(conversation.id),
+                        localStorage.setItem("userId",user.id)
                     ]
                         .sort((a, b) => a - b)
                         .join("-")}`;

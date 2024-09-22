@@ -10,8 +10,6 @@ export default function MessageOptionsDropdown({ message }) {
     const currentUser = props.auth.user; // Hozirgi foydalanuvchini olish
 
     // Foydalanuvchi ma'lumotlarini konsolga chiqarish
-    console.log("Login qilgan foydalanuvchi:", currentUser);
-
     const onMessageDelete = () => {
         console.log("Delete message");
         // Send axios post request to delete message and show notification on success

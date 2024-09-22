@@ -17,6 +17,13 @@ function Home({ selectedConversation = null, messages = null }) {
     const [showAttachmentPreview, setShowAttachmentPreview] = useState(false);
     const [previewAttachment, setPreviewAttachment] = useState({});
     const { on } = useEventBus();
+    const [userId, setUserId] = useState(null);
+
+    useEffect(() => {
+        const storedUserId = localStorage.getItem("userId"); // localStorage dan userId ni olish
+        setUserId(storedUserId); // State ga saqlash
+        console.log("Hozirgi foydalanuvchi ID:", storedUserId);
+    }, []);
 
     const messageCreated = (message) => {
         if (
@@ -153,6 +160,24 @@ function Home({ selectedConversation = null, messages = null }) {
         };
     }, [localMessages]);
 
+    useEffect(() => {
+        if (selectedConversation) {
+            const receiverId = selectedConversation.id; // O'sha odamning ID'si
+    
+            axios.post(`/api/messages/mark-as-read/${receiverId}`, { userId })
+                .then(response => {
+                    if (response.data.success) {
+                        console.log("Xabarlar o'qilgan deb belgilandi.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Xabarlarni o'qilgan deb belgilashda xato:", error);
+                });
+        }
+    }, [selectedConversation, userId]);
+    useEffect(() => {
+        console.log("Hozirgi foydalanuvchi ID:", userId);
+    }, [userId]);
     return (
         <>
             {!messages && (

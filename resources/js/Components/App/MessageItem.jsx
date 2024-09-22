@@ -18,7 +18,7 @@ const MessageItem = ({ message, attachmentClick }) => {
                     : "chat-start")
             }
         >
-            {<UserAvatar user={message.sender} />}
+            <UserAvatar user={message.sender} />
 
             <div className="chat-header">
                 {message.sender_id !== currentUser.id
@@ -38,10 +38,9 @@ const MessageItem = ({ message, attachmentClick }) => {
                 }
             >
                 {currentUser.is_admin && ( 
-                        message.sender_id == currentUser.id && (
+                        message.sender_id === currentUser.id && (
                             <MessageOptionsDropdown message={message} />
                         )
-                    
                 )}
                 <div className="chat-message">
                     <div className="chat-message-content">
@@ -51,6 +50,12 @@ const MessageItem = ({ message, attachmentClick }) => {
                         attachments={message.attachments}
                         attachmentClick={attachmentClick}
                     />
+                    {/* O'qilgan yoki o'qilmagan xabarlar holatini ko'rsatish faqat siz yuborgan xabarlarda */}
+                    {message.sender_id === currentUser.id && (
+                        <div className="text-xs opacity-50 mt-1">
+                            {message.is_read ? "O'qilgan" : "O'qilmagan"}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

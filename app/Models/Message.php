@@ -15,8 +15,10 @@ class Message extends Model
     protected $fillable = [
         'message',
         'sender_id',
-        'group_id',
+        'group_id',        
         'receiver_id',
+        'content',
+        'is_read', // O'qilgan statusi
     ];
 
     public function sender()
