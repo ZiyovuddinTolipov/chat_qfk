@@ -25,6 +25,7 @@ class StoreMessageRequest extends FormRequest
             'message' => 'nullable|string',
             'group_id' => 'required_without:receiver_id|nullable|exists:groups,id',
             'receiver_id' => 'required_without:group_id|nullable|exists:users,id',
+            'is_read' => 'nullable|boolean',
             'attachments' => 'nullable|array|max:10',
             'attachments.*' => 'file|max:1024000',
         ];

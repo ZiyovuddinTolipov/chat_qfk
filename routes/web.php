@@ -36,4 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::prefix('api')->group(function () {
+    Route::post('/messages/mark-as-read/{receiverId}', [MessageController::class, 'markMessagesAsRead']);
+});
+
 require __DIR__ . '/auth.php';

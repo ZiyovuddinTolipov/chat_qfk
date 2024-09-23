@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
             return [
                 'user_id1' => $groupedMessages->first()->sender_id,
                 'user_id2' => $groupedMessages->first()->receiver_id,
+                'is_read' => $groupedMessages->first()->is_read,
                 'last_message_id' => $groupedMessages->last()->id,
                 'created_at' => new Carbon(),
                 'updated_at' => new Carbon(),
